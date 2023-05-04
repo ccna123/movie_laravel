@@ -6,6 +6,7 @@ use App\Models\Movie;
 use App\Models\MovieSeat;
 use App\Models\Seat;
 use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -15,6 +16,7 @@ class MovieController extends Controller
     {
         return view("welcome");
     }
+
 
     public function get_movies()
     {
