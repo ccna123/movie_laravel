@@ -12,21 +12,42 @@ use Illuminate\Validation\Rule;
 
 class MovieController extends Controller
 {
+
+    public function get_movie_list($id = null)
+    {
+        $client = new Client();
+        $movies = Movie::select('id', 'imdb_id', 'ticket_fee')->get();
+
+        $movie_list = array();
+        foreach ($movies as $movie) {
+            $response = $client->request('GET', 'http://www.omdbapi.com/?i=' . $movie->imdb_id . '&apikey=' . env('API_KEY'));
+            $movie_data = json_decode($response->getBody());
+            $movie_data->ticket_fee = $movie->ticket_fee;
+            $movie_data->id = $movie->id;
+            $movie_list[] = $movie_data;
+        }
+        return $movie_list;
+    }
+
+    public function get_movie_info($id)
+    {
+        $movie = Movie::where("id", $id)->first();
+        $client = new Client();
+        $response = $client->request('GET', 'http://www.omdbapi.com/?i=' . $movie->imdb_id . '&apikey=' . env('API_KEY'));
+        return json_decode($response->getBody());
+    }
+
     public function index()
     {
-        return view("welcome");
+        $movie_list = $this->get_movie_list();
+        return view("welcome", compact('movie_list'));
     }
 
-
-    public function get_movies()
+    public function info(Request $request)
     {
-        $movies = Movie::get();
-        return response()->json(compact("movies"));
-    }
-
-    public function info()
-    {
-        return view("info");
+        $movie = $this->get_movie_info($request->movie_id);
+        // dd($movie);
+        return view("info", compact('movie'));
     }
 
     public function seat()
