@@ -1,5 +1,13 @@
 $(document).ready(function () {
-    const apikey = "f8a39784";
+    let apikey = ''
+    $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:8000/api/get_api_key",
+        dataType: "json",
+        success: function (response) {
+            apikey = response.api
+        }
+    });
     $.ajax({
         type: "GET",
         url: "/get_movies",
@@ -9,19 +17,19 @@ $(document).ready(function () {
                 getMovies(movie.imdb_id, apikey, movie.ticket_fee, movie.id);
             });
         },
-        error: function(xhr, textStatus, errorThrown){
+        error: function (xhr, textStatus, errorThrown) {
             console.log(xhr.responseText);
         }
     });
 });
 
-function getMovies(imdb_id, apikey, ticket_fee, id){
+function getMovies(imdb_id, apikey, ticket_fee, id) {
     axios.get("http://www.omdbapi.com/?i=" + imdb_id + "&apikey=" + apikey)
-    .then((response) => {
-   
-    let movies = response.data;
-    let output = "";
-    output += `
+        .then((response) => {
+
+            let movies = response.data;
+            let output = "";
+            output += `
     <div class="col-lg-4 col-md-6 col-12 p-4">
         <div class="card" style="width: 18rem;">
             <div>
@@ -48,9 +56,9 @@ function getMovies(imdb_id, apikey, ticket_fee, id){
     </div>
     `;
 
-    $("#movie .row").append(output);
-    })
-    .catch((err)=>{
-    console.log(err);
-    })
+            $("#movie .row").append(output);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 }

@@ -29,10 +29,7 @@ Route::post('/cancel', [MovieController::class, "cancel"]);
 Route::get('/confirm_order', [MovieController::class, "confirm_order"]);
 Route::post('/logout', [MovieController::class, "logout"]);
 
-Route::get("/admin", [AdminController::class, "index"]);
+Route::get("/admin", [AdminController::class, "index"])->middleware("auth");
 Route::post("/update_movie", [AdminController::class, "update_movie"]);
 Route::post("/delete_movie", [AdminController::class, "delete_movie"]);
 Route::post("/add_movie", [AdminController::class, "add_movie"]);
-
-
-

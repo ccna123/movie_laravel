@@ -26,9 +26,12 @@
                 <li class="nav-item">
                   <a class="nav-link fw-bold text-white" href="/checking_booking">Check Booking</a>
                 </li>
+                @if (Auth::check() && Auth::user()->role == 'admin')
+                    
                 <li class="nav-item">
                   <a class="nav-link fw-bold text-white" href="/admin">Dashboard</a>
                 </li>
+                @endif
               </ul>
               <ul class="navbar-nav ml-auto">
               @auth

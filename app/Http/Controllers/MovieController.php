@@ -26,7 +26,7 @@ class MovieController extends Controller
     {
         return view("info");
     }
-    
+
     public function seat()
     {
         $seat_list = Seat::all();
@@ -39,9 +39,9 @@ class MovieController extends Controller
     {
         $cus_name = $request->cus_name;
         $cus_email = $request->cus_email;
-        $seat_code =explode(",", $request->seat_code);
+        $seat_code = explode(",", $request->seat_code);
         $movie_id = $request->movie_id;
-        
+
         foreach ($seat_code as $seat) {
             $seat_id = Seat::where("seat_code", trim($seat))->first()->id;
             $record = MovieSeat::where([
@@ -49,7 +49,7 @@ class MovieController extends Controller
                 "seat_id" => $seat_id,
             ])->first();
             if (!$record) {
-                
+
                 MovieSeat::create([
                     "movie_id" => $movie_id,
                     "seat_id" => $seat_id,
@@ -68,7 +68,7 @@ class MovieController extends Controller
         return "Success";
     }
     public function checking_booking()
-    {   
+    {
         return view("login");
     }
 
@@ -82,7 +82,7 @@ class MovieController extends Controller
         } else {
             $data = [];
             $group_record = $records->groupBy("movie_id");
-            foreach ($group_record as $movieID=>$movieRecords) {
+            foreach ($group_record as $movieID => $movieRecords) {
                 $movie_name = Movie::find($movieID)->name;
                 $ticket_fee_total = Movie::find($movieID)->ticket_fee * $movieRecords->count();
                 $seat_codes = Movie::find($movieID)->seats()->pluck("seat_code")->implode(",");
@@ -95,11 +95,9 @@ class MovieController extends Controller
                     "cus_email" => $cus_email,
                     "ticket_fee_total" => $ticket_fee_total,
                 ];
-
             }
             return response()->json(compact("data"));
         }
-        
     }
 
     public function checking_order(Request $request)
@@ -113,9 +111,9 @@ class MovieController extends Controller
     public function cancel(Request $request)
     {
         $movie_id = Movie::where("name", $request->name)->first()->id;
-        MovieSeat::where( "movie_id", $movie_id)
-        ->where("cus_email", $request->cus_email)
-        ->delete();
+        MovieSeat::where("movie_id", $movie_id)
+            ->where("cus_email", $request->cus_email)
+            ->delete();
         return response()->json([
             "status" => "success"
         ]);
@@ -147,29 +145,27 @@ class MovieController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return view("login");
-
     }
 
     public function confirm_order()
     {
-    
+
         $records = MovieSeat::where("cus_email", auth()->user()->email)->get();
         $data = [];
         $group_record = $records->groupBy("movie_id");
-        foreach ($group_record as $movieID=>$movieRecords) {
+        foreach ($group_record as $movieID => $movieRecords) {
             $movie_name = Movie::find($movieID)->name;
             $ticket_fee_total = Movie::find($movieID)->ticket_fee * $movieRecords->count();
             $seat_codes = Movie::find($movieID)->seats()->pluck("seat_code")->implode(",");
             $cus_name = $movieRecords->first()->cus_name;
             $cus_email = $movieRecords->first()->cus_email;
             $data[] = [
-                    "movie_name" => $movie_name,
-                    "seat_code" => $seat_codes,
-                    "cus_name" => $cus_name,
-                    "cus_email" => $cus_email,
-                    "ticket_fee_total" => $ticket_fee_total,
+                "movie_name" => $movie_name,
+                "seat_code" => $seat_codes,
+                "cus_name" => $cus_name,
+                "cus_email" => $cus_email,
+                "ticket_fee_total" => $ticket_fee_total,
             ];
-
         }
         return view("confirm_order", [
             "data" => $data

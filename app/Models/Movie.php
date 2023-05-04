@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Movie extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        "imdb_id",
+        "name",
+        "ticket_fee",
+    ];
 
     public function seats()
     {
