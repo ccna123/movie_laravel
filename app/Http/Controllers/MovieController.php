@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class MovieController extends Controller
 {
 
-    public function get_movie_list($id = null)
+    public function get_movie_list()
     {
         $client = new Client();
         $movies = Movie::select('id', 'imdb_id', 'ticket_fee')->get();
