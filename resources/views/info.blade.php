@@ -5,7 +5,7 @@
     <a href="/" class="btn btn-primary px-4">Back</a>
 </div>
 <div class="container info my-5 d-md-flex justify-content-between">
-    <div class="card mx-sm-auto w-auto" style="width: 18rem;">
+    <div class="card mx-sm-auto w-auto">
         <img src="{{ $movie->Poster }}" class="card-img-top img-fluid" alt="...">
         <div class="card-body bg-dark text-white">
             <p class="card-text">{{ $movie->Plot }}</p>
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-<div class="info_wrapper w-75 w-100">
+<div class="info_wrapper w-75 w-100 border border-1 rounded-1">
     <div class="inner p-lg-5 text-center" style="width: 100%; min-width: 100%;">
         <h1>{{ $movie->Title }}</h1>
         <div class="movie_info w-50 mx-auto">
