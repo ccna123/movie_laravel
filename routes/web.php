@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\AdminController;
-
+use App\Services\UserService;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +21,7 @@ Route::get('/get_movies', [MovieController::class, "get_movies"]);
 Route::get('/info', [MovieController::class, "info"]);
 Route::get('/seat', [MovieController::class, "seat"]);
 Route::post('/booking', [MovieController::class, "booking"]);
-Route::post('/login', [MovieController::class, "login"]);
+Route::post('/login', [MovieController::class, "login"])->name('login');
 Route::get('/search_order', [MovieController::class, "search_order"]);
 Route::get('/checking_booking', [MovieController::class, "checking_booking"]);
 Route::get('/checking_order', [MovieController::class, "checking_order"]);
@@ -33,3 +33,4 @@ Route::get("/admin", [AdminController::class, "index"])->middleware("auth");
 Route::post("/update_movie", [AdminController::class, "update_movie"]);
 Route::post("/delete_movie", [AdminController::class, "delete_movie"]);
 Route::post("/add_movie", [AdminController::class, "add_movie"]);
+Route::post("/update_info", [AdminController::class, "update_info"]);
