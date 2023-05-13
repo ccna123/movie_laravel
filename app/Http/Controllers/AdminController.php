@@ -6,8 +6,10 @@ use App\Models\Movie;
 use App\Models\MovieSeat;
 use App\Models\Profit;
 use App\Models\Proft;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -33,11 +35,12 @@ class AdminController extends Controller
             ->join("movies", "profits.movie_id", "=", "movies.id")
             ->select("movies.name", "profits.profit")
             ->get();
-
-
-        return view("admin", [
+        // dd(User::where('email', auth()->user()->email)->first()->img);
+        return view("admin/admin", [
             "movie_list" => $movie_list,
             "profit_data" => $profit_data,
+            "total_profit" => Profit::sum('profit'),
+            "admin_img" => User::where('email', auth()->user()->email)->first()->img
         ]);
     }
 
@@ -73,5 +76,24 @@ class AdminController extends Controller
             return redirect("admin")->with("add_message", "Add movie successfully");
         }
         return redirect("admin")->with("exist_message", "This movie is already exist");
+    }
+
+    public function update_info(Request $request)
+    {
+
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+            'profie_img' => ['required', 'mimes:png,jpg,jpeg', 'max:150000']
+        ]);
+
+        $ImgNewName = time() . '.' . $request->profie_img->extension();
+        $request->profie_img->move(public_path('images'), $ImgNewName);
+
+
+        $user = User::where("email", auth()->user()->email)->first();
+        $user->img = $ImgNewName;
+        $user->save();
+        return redirect('/admin')->with('update_info', 'Information is successfully updated');
     }
 }

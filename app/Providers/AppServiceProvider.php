@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\MovieService;
+use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(MovieService::class, function ($app) {
+            return new MovieService();
+        });
+
+        $this->app->singleton(UserService::class, function ($app) {
+            return new UserService();
+        });
     }
 
     /**
