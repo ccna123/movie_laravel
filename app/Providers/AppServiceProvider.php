@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\AdminService;
 use App\Services\MovieService;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
@@ -21,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(UserService::class, function ($app) {
             return new UserService();
+        });
+
+        $this->app->singleton(AdminService::class, function ($app) {
+            return new AdminService();
         });
     }
 

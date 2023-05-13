@@ -40,7 +40,7 @@
           <form action="update_info" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-md-4 border border-danger">
+                <div class="col-md-4">
                   @if (file_exists(public_path('images/'.$admin_img)))
                     
                     <img 
