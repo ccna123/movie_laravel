@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Services\AdminService;
 use App\Services\MovieService;
 use App\Services\UserService;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,6 +37,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Paginator::useBootstrap();
     }
 }

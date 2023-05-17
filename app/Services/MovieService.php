@@ -7,6 +7,8 @@ use App\Models\MovieSeat;
 use App\Models\Seat;
 use App\Models\User;
 use GuzzleHttp\Client;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class MovieService
 {
@@ -15,14 +17,25 @@ class MovieService
         $client = new Client();
         $movies = Movie::select('id', 'imdb_id', 'ticket_fee')->get();
 
-        $movie_list = array();
+        $movie_list = new Collection();
         foreach ($movies as $movie) {
             $response = $client->request('GET', 'http://www.omdbapi.com/?i=' . $movie->imdb_id . '&apikey=' . env('API_KEY'));
             $movie_data = json_decode($response->getBody());
             $movie_data->ticket_fee = $movie->ticket_fee;
             $movie_data->id = $movie->id;
-            $movie_list[] = $movie_data;
+            $movie_list->push($movie_data);
         }
+        $perPage = 3; // Number of movies per page
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $currentPageItems = $movie_list->slice(($currentPage - 1) * $perPage, $perPage);
+
+        $movie_list = new LengthAwarePaginator(
+            $currentPageItems,
+            $movie_list->count(),
+            $perPage,
+            $currentPage,
+            ['path' => LengthAwarePaginator::resolveCurrentPath()]
+        );
         return $movie_list;
     }
 

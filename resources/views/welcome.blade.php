@@ -32,6 +32,7 @@
             </div>
         </div>
         @endforeach
+        {{ $movie_list->links() }}
     </div>
 </div> 
 @endsection
