@@ -15,11 +15,9 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("user_id");
-            $table->unsignedBigInteger("movie_id");
 
-            $table->foreign("user_id")->references("id")->on("users");
-            $table->foreign("movie_id")->references("id")->on("movies");
+            $table->foreignId("user_id")->references("id")->on("users");
+            $table->foreignId("movie_id")->references("id")->on("movies");
             $table->text("content")->nullable();
 
             $table->timestamps();

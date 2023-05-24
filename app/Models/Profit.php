@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profit extends Model
 {
-    protected $fillable = [
-        "movie_id",
-        "profit",
-    ];
     use HasFactory;
+    protected $fillable = [
+        'movie_id',
+        'profit'
+    ];
 }

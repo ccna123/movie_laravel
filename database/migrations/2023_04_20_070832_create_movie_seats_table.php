@@ -15,20 +15,11 @@ return new class extends Migration
     {
         Schema::create('movie_seats', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("movie_id")->unsigned();
-            $table->bigInteger("seat_id")->unsigned();
+            $table->foreignId('movie_id')->constrained('movies')->onDelete('cascade');
+            $table->foreignId('seat_id')->constrained('seats')->onDelete('cascade');
             $table->string("cus_name");
             $table->string("cus_email");
-            
-            $table->foreign("movie_id")
-                ->references("id")
-                ->on("movies")
-                ->onDelete("cascade");
-            
-            $table->foreign("seat_id")
-                ->references("id")
-                ->on("seats")
-                ->onDelete("cascade");
+
             $table->timestamps();
         });
     }

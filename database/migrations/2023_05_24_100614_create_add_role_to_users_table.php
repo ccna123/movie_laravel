@@ -13,10 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('seats', function (Blueprint $table) {
-            $table->id();
-            $table->string("seat_code");
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string("role")->nullable();
         });
     }
 
@@ -27,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seats');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role');
+        });
     }
 };
