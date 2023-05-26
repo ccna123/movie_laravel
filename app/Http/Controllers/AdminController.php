@@ -48,4 +48,28 @@ class AdminController extends Controller
 
         return $this->adminService->update_admin_info($request);
     }
+
+    public function update_img(Request $request)
+    {
+
+        if ($request->hasFile('profile_img')) {
+            $ImgNewName = time() . '.' . $request->profile_img->extension();
+            $request->profile_img->move(public_path('images'), $ImgNewName);
+
+            // $user = User::where("email", auth()->user()->email)->first();
+            // $user->img = $ImgNewName;
+            // $user->save();
+            return response()->json([
+                'mess' => "ok"
+            ]);
+        }
+        return response()->json([
+            'mess' => 'fail'
+        ]);
+    }
+
+    public function delete_img()
+    {
+        # code...
+    }
 }

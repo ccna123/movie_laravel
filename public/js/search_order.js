@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#search_order").click(function (e) { 
+    $("#search_order").click(function (e) {
         e.preventDefault();
         let order_email = $("input").val();
         $.ajax({
@@ -10,7 +10,7 @@ $(document).ready(function () {
                 if (response.mess == "Not found") {
                     alert("Not found");
                 } else {
-                    
+
                     $("tbody").empty();
                     let index = 1;
                     response.data.forEach(element => {

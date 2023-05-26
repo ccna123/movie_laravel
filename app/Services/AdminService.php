@@ -73,7 +73,7 @@ class AdminService
         $request->validate([
             'name' => ['required'],
             'email' => ['required', 'email'],
-            'profie_img' => ['required', 'mimes:png,jpg,jpeg', 'max:150000']
+            'filepond' => ['required', 'mimes:png,jpg,jpeg', 'max:150000']
         ]);
 
         $ImgNewName = time() . '.' . $request->profie_img->extension();

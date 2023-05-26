@@ -2,16 +2,24 @@
 
 namespace App\Services;
 
+
 use App\Models\Movie;
-use App\Models\MovieSeat;
+use App\Models\Order;
 use App\Models\Seat;
 use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use App\Services\SendEmailService;
 
 class MovieService
 {
+    private $sendEMailService;
+    public function __construct(SendEmailService $sendEMailService)
+    {
+        $this->sendEMailService = $sendEMailService;
+    }
+
     public function get_movie_list()
     {
         $client = new Client();
@@ -61,13 +69,13 @@ class MovieService
 
         foreach ($seat_code as $seat) {
             $seat_id = Seat::where("seat_code", trim($seat))->first()->id;
-            $record = MovieSeat::where([
+            $record = Order::where([
                 "movie_id" => $movie_id,
                 "seat_id" => $seat_id,
             ])->first();
             if (!$record) {
 
-                MovieSeat::create([
+                Order::create([
                     "movie_id" => $movie_id,
                     "seat_id" => $seat_id,
                     "cus_name" => $cus_name,
@@ -82,12 +90,17 @@ class MovieService
                 "email" => $cus_email,
             ]);
         }
+
+
+        $order_data = $this->get_confirm_order();
+        $this->sendEMailService->sendMail($cus_email, json_encode($order_data));
+
         return "Success";
     }
 
     public function get_order($request)
     {
-        $records = MovieSeat::where("cus_email", $request->email)->get();
+        $records = Order::where("cus_email", $request->email)->get();
         if ($records->count() == 0) {
             return response()->json([
                 "mess" => "Not found"
@@ -123,7 +136,7 @@ class MovieService
     public function cancel_order($request)
     {
         $movie_id = Movie::where("name", $request->name)->first()->id;
-        MovieSeat::where("movie_id", $movie_id)
+        Order::where("movie_id", $movie_id)
             ->where("cus_email", $request->cus_email)
             ->delete();
         return response()->json([
@@ -133,7 +146,7 @@ class MovieService
 
     public function get_confirm_order()
     {
-        $records = MovieSeat::where("cus_email", auth()->user()->email)->get();
+        $records = Order::where("cus_email", auth()->user()->email)->get();
         $data = [];
         $group_record = $records->groupBy("movie_id");
         foreach ($group_record as $movieID => $movieRecords) {

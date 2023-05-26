@@ -7,6 +7,7 @@ use App\Services\MovieService;
 use App\Services\UserService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use App\Services\SendEmailService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,7 +19,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(MovieService::class, function ($app) {
-            return new MovieService();
+            $sendEmailService = $app->make(SendEmailService::class);
+            return new MovieService($sendEmailService);
         });
 
         $this->app->singleton(UserService::class, function ($app) {
@@ -27,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(AdminService::class, function ($app) {
             return new AdminService();
+        });
+
+        $this->app->singleton(SendEmailService::class, function ($app) {
+            return new SendEmailService();
         });
     }
 

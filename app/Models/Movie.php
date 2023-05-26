@@ -16,7 +16,7 @@ class Movie extends Model
 
     public function seats()
     {
-        return $this->belongsToMany(Seat::class, "movie_seats");
+        return $this->belongsToMany(Seat::class, "orders");
     }
 
     public function reviews()

@@ -11,6 +11,6 @@ class Seat extends Model
 
     public function movies()
     {
-        return $this->belongsToManyl(Movie::class, "movie_seats");
+        return $this->belongsToManyl(Movie::class, "orders");
     }
 }

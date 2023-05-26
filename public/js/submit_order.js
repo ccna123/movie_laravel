@@ -9,7 +9,7 @@ $(document).ready(function () {
         type: "GET",
         url: "/checking_order",
         data: {
-            movie_id:movie_id
+            movie_id: movie_id
         },
         dataType: "json",
         success: function (response) {
@@ -23,30 +23,30 @@ $(document).ready(function () {
             });
         }
     });
-    
+
     row.forEach(element => {
 
-        
-        element.addEventListener("click", ()=>{
+
+        element.addEventListener("click", () => {
 
             if (element.classList.contains("ordered")) {
                 element.classList.remove("ordered")
                 element.style.color = null
 
                 let index = seat_array.indexOf(element.id)
-                seat_array.splice(index,1)
+                seat_array.splice(index, 1)
             } else {
                 element.classList.add("ordered")
                 element.style.color = "green"
-                
+
                 seat_array.push(element.id);
             }
             $("#seat_code").val(seat_array.join(", "));
-           
+
         });
     });
-    
-    $("#order").click(function (e) { 
+
+    $("#order").click(function (e) {
         e.preventDefault();
         let cus_name = $("#cus_name").val();
         let cus_email = $("#cus_email").val();

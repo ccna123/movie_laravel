@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    $("#login").click(function (e) { 
+    $("#login").click(function (e) {
         e.preventDefault();
         let email = $("#email").val();;
         $.ajax({
             type: "POST",
             url: "/login",
             data: {
-                email:email
+                email: email
             },
             headers: {
                 "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
