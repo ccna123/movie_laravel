@@ -92,7 +92,7 @@ class MovieService
         }
 
 
-        $order_data = $this->get_confirm_order();
+        $order_data = $this->get_confirm_order($cus_email);
         $this->sendEMailService->sendMail($cus_email, json_encode($order_data));
 
         return "Success";
@@ -144,9 +144,9 @@ class MovieService
         ]);
     }
 
-    public function get_confirm_order()
+    public function get_confirm_order($cus_email)
     {
-        $records = Order::where("cus_email", auth()->user()->email)->get();
+        $records = Order::where("cus_email", $cus_email)->get();
         $data = [];
         $group_record = $records->groupBy("movie_id");
         foreach ($group_record as $movieID => $movieRecords) {

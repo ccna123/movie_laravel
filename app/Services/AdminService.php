@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Movie;
-use App\Models\MovieSeat;
+use App\Models\Order;
 use App\Models\Profit;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class AdminService
 {
     public function get_profit_data()
     {
-        $group_record = MovieSeat::groupBy("movie_id")
+        $group_record = Order::groupBy("movie_id")
             ->select("movie_id", DB::raw("count(*) as total"))
             ->get();
         $profit_data = [];

@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Mail\OrderMovie;
-use App\Mail\SendMail;
-use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendEmailJob;
+use Carbon\Carbon;
 
 class SendEmailService
 {
     public function sendMail($cus_email, $order_data)
     {
-        Mail::to($cus_email)->send(new OrderMovie($order_data));
+        $job = (new SendEmailJob($cus_email, $order_data))->delay(Carbon::now()->addSeconds(5));
+        dispatch($job);
     }
 }

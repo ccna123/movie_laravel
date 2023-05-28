@@ -56,11 +56,11 @@ class AdminController extends Controller
             $ImgNewName = time() . '.' . $request->profile_img->extension();
             $request->profile_img->move(public_path('images'), $ImgNewName);
 
-            // $user = User::where("email", auth()->user()->email)->first();
-            // $user->img = $ImgNewName;
-            // $user->save();
+            $user = auth()->user();
+            $user->img = $ImgNewName;
+            $user->save();
             return response()->json([
-                'mess' => "ok"
+                'img_name' => $ImgNewName
             ]);
         }
         return response()->json([
@@ -68,8 +68,25 @@ class AdminController extends Controller
         ]);
     }
 
-    public function delete_img()
+    public function update_admin_name(Request $request)
     {
-        # code...
+        $user =  auth()->user();
+        $user->name = $request->name;
+        $user->save();
+
+        return response()->json([
+            'mess' => 'success'
+        ]);
+    }
+
+    public function update_admin_email(Request $request)
+    {
+        $user =  auth()->user();
+        $user->email = $request->email;
+        $user->save();
+
+        return response()->json([
+            'mess' => 'success'
+        ]);
     }
 }

@@ -37,7 +37,10 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
-
+{{-- mess --}}
+<div id="mess">
+</div>
+{{-- end mess --}}
 <div class="container mt-5">
   <div class="wrapper">
     <h1>Dashboard</h1>
@@ -48,7 +51,11 @@
         <div class="col-md-4">
 
           <div class="my-3">
-            <input type="file" class="my-pond" name="filepond"/>
+
+            <img src="{{ auth()->user()->img ? asset('images/'.auth()->user()->img) : asset('images/noprofil.jpg') }} "
+              class="img-fluid" id="profile_img" style="width: 20rem; height: 100%;">
+
+            <input type="file" class="my-pond" name="filepond" style="width: 20rem" />
             @error('profie_img')
             <p class="fw-bold text-danger">
               {{ $message }}
@@ -58,11 +65,15 @@
         </div>
 
         <div class="col-md-8">
-          <div class="row g-3">
 
+          <div class="row g-3">
             <div class="col-md-12">
               <label for="inputName" class="form-label">Name</label>
-              <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name') }}">
+              <div class="d-flex">
+                <input type="text" class="form-control" id="inputName" name="name" disabled
+                  value="{{ auth()->user()->name }}">
+                <a class="btn" id="edit_name" style="margin-left: 20px"><i class="fa-solid fa-pen text-primary"></i></a>
+              </div>
               @error('name')
               <p class="fw-bold text-danger">
                 {{ $message }}
@@ -72,16 +83,17 @@
 
             <div class="col-md-12">
               <label for="inputEmail" class="form-label">Email</label>
-              <input type="email" class="form-control" id="inputEmail" name="email" value="{{ old('email') }}">
+              <div class="d-flex">
+                <input type="email" class="form-control" id="inputEmail" name="email"
+                  value="{{ auth()->user()->email }}" disabled>
+                <a class="btn" id="edit_email" style="margin-left: 20px"><i
+                    class="fa-solid fa-pen text-primary"></i></a>
+              </div>
               @error('email')
               <p class="fw-bold text-danger">
                 {{ $message }}
               </p>
               @enderror
-            </div>
-
-            <div class="col-12">
-              <button type="submit" class="btn btn-info w-100" id="update_btn">Update Info</button>
             </div>
           </div>
         </div>
@@ -179,10 +191,10 @@
 
 @endsection
 @section('script')
-
+<script src="js/edit_admin_info.js"></script>
 <script>
-  $(function(){
-  
+  $(function () {
+
     // First register any plugins
     $.fn.filepond.registerPlugin(FilePondPluginImagePreview);
 
@@ -192,37 +204,37 @@
     // Set allowMultiple property to true
     $('.my-pond').filepond('allowMultiple', true);
 
-    
+
     $('.my-pond').on('FilePond:addfile', function (e) {
       const formData = new FormData();
-        formData.append('profile_img', e.detail.file.file);
+      formData.append('profile_img', e.detail.file.file);
 
-        fetch('/update_img', {
-          method: 'POST',
-          body: formData,
-          headers:{
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-          }
+      fetch('/update_img', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          $("#mess").append(`
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            Update image successfully.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    `);
+          setTimeout(() => {
+            $('#mess').remove();
+          }, 3000);
+
+          $('#profile_img').attr('src', 'images/'+data.img_name);
         })
-        .then(response=> response.json())
-        .then(data=> {
-          console.log("File uploaded", data);
-        })
-        .catch(error=>{
+        .catch(error => {
           console.log("Error uploading file", error);
         })
-  });
-    // Listen for addfile event
-    // $('.my-pond').on('FilePond:addfile', function(event, error) {
-    //   console.log(event.file);
-    //     if (error) {
-    //       console.log(file);
-    //       return;
-    //     }
+    });
 
-        
-    // });
-  
   });
 </script>
 @endsection
