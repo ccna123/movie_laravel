@@ -34,13 +34,6 @@ Route::get('/confirm_order', [MovieController::class, "confirm_order"])->name('c
 Route::post('/logout', [MovieController::class, "logout"]);
 
 /* test event */
-Route::get('event', function () {
-    event(new TaskEvent('how are you'));
-});
-Route::get('listen', function () {
-    return view('broadcast');
-});
-
 Route::get("/admin", [AdminController::class, "index"])->middleware("auth");
 Route::post("/update_movie", [AdminController::class, "update_movie"]);
 Route::post("/delete_movie", [AdminController::class, "delete_movie"]);

@@ -7,8 +7,8 @@
 <div id="movie" class="container">
     <div class="row">
         @foreach ($movie_list as $movie)
-        <div class="col-lg-4 col-md-6 col-12 p-4">
-            <div class="card" style="width: 18rem;">
+        <div class="col-lg-4 col-md-6 col-12 p-4 text-center">
+            <div class="card mx-auto" style="width: 20rem;">
                 <div>
                     <img src="{{$movie->Poster}}" class="card-img-top img-fluid" style="width: 500px; height: 500px;">
                 </div>
