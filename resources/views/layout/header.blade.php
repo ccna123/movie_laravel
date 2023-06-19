@@ -36,12 +36,14 @@
             <li class="nav-item">
               <a class="nav-link fw-bold text-white" href="/checking_booking">Check Booking</a>
             </li>
-            @if (Auth::check() && Auth::user()->role == 'admin')
-
+            
+            @can('admin_auth', Auth::user())
+                
             <li class="nav-item">
               <a class="nav-link fw-bold text-white" href="/admin">Dashboard</a>
             </li>
-            @endif
+            @endcan
+            
           </ul>
           <ul class="navbar-nav ml-auto">
             @auth
