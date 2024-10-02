@@ -18,6 +18,8 @@ services:
       - DB_DATABASE=movie
       - DB_USERNAME=root
       - DB_PASSWORD=root
+    command: >
+      bash -c "composer install && php artisan migrate --force && apache2-foreground"
 
   db:
     image: mysql:latest

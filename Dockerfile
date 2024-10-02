@@ -16,6 +16,9 @@ COPY . .
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql
 
+# Configure Apache to serve the public directory
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+
 # Set permissions (adjust according to your needs)
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
