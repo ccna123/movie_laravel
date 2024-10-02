@@ -9,6 +9,10 @@ class Seat extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        "seat_code"
+    ];
+
     public function movies()
     {
         return $this->belongsToManyl(Movie::class, "orders");

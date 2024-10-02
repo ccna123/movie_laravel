@@ -18,7 +18,7 @@
                         <h5 class="card-title">{{$movie->Title}}</h5>
                     </div>
                     <div>
-                        <p class="card-text">{{$movie->Plot}}</p>
+                        <p class="card-text">{{ \Illuminate\Support\Str::limit($movie->Plot, 100, '...') }} <a style="display: inline" href="/info?movie_id={{ $movie->id }}">View</a></p>
                     </div>
                     <div>
                         <p class="card-text mt-4 fw-bold h1">Ticket: ${{ $movie->ticket_fee }}</p>

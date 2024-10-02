@@ -18,7 +18,7 @@
     <div class="info_wrapper w-75 w-100 border border-1 rounded-1">
         <div class="inner p-lg-5 text-center" style="width: 100%; min-width: 100%;">
             <h1>{{ $movieInfo->Title }}</h1>
-            <div class="movieInfo_info w-50 mx-auto">
+            <div class="movieInfo_info w-100 mx-auto">
                 <ul class="list-group">
                     <li class="list-group-item">Year: {{ $movieInfo->Year }}</li>
                     <li class="list-group-item">Rated: {{ $movieInfo->Rated }}</li>
@@ -26,7 +26,7 @@
                     <li class="list-group-item">Duration: {{ $movieInfo->Runtime }}</li>
                     <li class="list-group-item">Genre: {{ $movieInfo->Genre }}</li>
                 </ul>
-                <div class="starring d-flex">
+                <div class="starring d-flex mt-3">
                     <p>Starring: {{ $movieInfo->Actors }}</p>
                 </div>
                 <div class="rating">

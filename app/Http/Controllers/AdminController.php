@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Movie;
 use App\Models\Profit;
+use App\Models\Seat;
 use App\Models\User;
 use App\Services\AdminService;
 use Illuminate\Http\Request;
@@ -70,7 +71,7 @@ class AdminController extends Controller
 
     public function update_admin_name(Request $request)
     {
-        $user =  auth()->user();
+        $user = auth()->user();
         $user->name = $request->name;
         $user->save();
 
@@ -81,12 +82,71 @@ class AdminController extends Controller
 
     public function update_admin_email(Request $request)
     {
-        $user =  auth()->user();
+        $user = auth()->user();
         $user->email = $request->email;
         $user->save();
 
         return response()->json([
             'mess' => 'success'
         ]);
+    }
+
+    public function import_movie_data(Request $request)
+    {
+        if ($request->hasFile('file')) { // Check for the file
+
+            $file = $request->file("file");
+            $fileContent = file($file->getPathname());
+
+            $isFirstRow = true;
+
+            foreach ($fileContent as $line) {
+
+                if ($isFirstRow) {
+                    $isFirstRow = false;
+                    continue;
+                }
+
+                $data = str_getcsv($line, ";");
+                Movie::create([
+                    'id' => $data[0],
+                    'imdb_id' => $data[1],
+                    'name' => $data[2],
+                    'ticket_fee' => $data[3],
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+            return redirect()->back()->with("Imported successfully");
+        }
+        return response()->json(['mess' => 'No file found']); // Response if no file is present
+    }
+    public function import_seat_data(Request $request)
+    {
+        if ($request->hasFile('file')) { // Check for the file
+
+            $file = $request->file("file");
+            $fileContent = file($file->getPathname());
+
+            $isFirstRow = true;
+
+            foreach ($fileContent as $line) {
+
+                if ($isFirstRow) {
+                    $isFirstRow = false;
+                    continue;
+                }
+
+                $data = str_getcsv($line, ";");
+                Seat::create([
+                    'id' => $data[0],
+                    'seat_code' => $data[1],
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+            return redirect()->back()->with("Imported successfully");
+        }
+        return response()->json(['mess' => 'No file found']); // Response if no file is present
     }
 }

@@ -102,8 +102,28 @@
     {{-- end profile info --}}
     <hr>
     @include('modal.add_movie')
-    <button type="submit" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#addMovie">Add movie
-      <span><i class="fa-solid fa-plus"></i></span></button>
+    <div class="d-flex flex-row" style="gap: 20px">
+      <button type="submit" class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#addMovie">Add movie
+        <span><i class="fa-solid fa-plus"></i></span></button>
+
+      <input type="file" id="csvFileInput" accept=".csv" style="display: none">
+      <div>
+        <button id="importMovieCsvButton" type="submit" class="btn btn-success mb-4">Import movie csv
+          <span><i class="fa-solid fa-plus"></i></span></button>
+        <span id="fileName" class="ms-2"></span>
+        <span id="chooseFile" class="ms-2" style="display: none; cursor: pointer; color: green;"><i
+            class="fa-solid fa-check"></i></span>
+        <span id="removeFile" class="ms-2" style="display: none; cursor: pointer; color: red;">&times;</span>
+      </div>
+      <div>
+        <button id="importSeatCsvButton" type="submit" class="btn btn-success mb-4">Import seats csv
+          <span><i class="fa-solid fa-plus"></i></span></button>
+        <span id="fileName" class="ms-2"></span>
+        <span id="chooseFile" class="ms-2" style="display: none; cursor: pointer; color: green;"><i
+            class="fa-solid fa-check"></i></span>
+        <span id="removeFile" class="ms-2" style="display: none; cursor: pointer; color: red;">&times;</span>
+      </div>
+    </div>
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
@@ -228,7 +248,7 @@
             $('#mess').remove();
           }, 3000);
 
-          $('#profile_img').attr('src', 'images/'+data.img_name);
+          $('#profile_img').attr('src', 'images/' + data.img_name);
         })
         .catch(error => {
           console.log("Error uploading file", error);

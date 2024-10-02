@@ -43,3 +43,5 @@ Route::post("/update_img", [AdminController::class, "update_img"]);
 Route::delete("/delete_img", [AdminController::class, "delete_img"]);
 Route::post("/update_admin_name", [AdminController::class, "update_admin_name"]);
 Route::post("/update_admin_email", [AdminController::class, "update_admin_email"]);
+Route::post("/import_movie_data", [AdminController::class, "import_movie_data"]);
+Route::post("/import_seat_data", [AdminController::class, "import_seat_data"]);
