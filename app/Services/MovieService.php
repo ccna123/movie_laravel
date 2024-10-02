@@ -92,8 +92,8 @@ class MovieService
         }
 
 
-        $order_data = $this->get_confirm_order($cus_email);
-        $this->sendEMailService->sendMail($cus_email, json_encode($order_data));
+        // $order_data = $this->get_confirm_order($cus_email);
+        // $this->sendEMailService->sendMail($cus_email, json_encode($order_data));
 
         return "Success";
     }

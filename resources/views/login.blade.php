@@ -6,7 +6,6 @@
     <form class="w-75" action="login" method="POST">
         @csrf
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
           <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email to login">
           @error('email')
               <p class="text-danger fw-bold">

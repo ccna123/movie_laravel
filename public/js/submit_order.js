@@ -27,7 +27,9 @@ $(document).ready(function () {
     row.forEach(element => {
 
 
-        element.addEventListener("click", () => {
+        element.addEventListener("click", (event) => {
+
+            event.preventDefault()
 
             if (element.classList.contains("ordered")) {
                 element.classList.remove("ordered")

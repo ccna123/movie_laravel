@@ -52,7 +52,7 @@
 
           <div class="my-3">
 
-            <img src="{{ auth()->user()->img ? asset('images/'.auth()->user()->img) : asset('images/noprofil.jpg') }} "
+            <img src="{{ auth()->user()->img ? asset('images/'.auth()->user()->img) : asset('images/noprofile.jpg') }} "
               class="img-fluid" id="profile_img" style="width: 20rem; height: 100%;">
 
             <input type="file" class="my-pond" name="filepond" style="width: 20rem" />

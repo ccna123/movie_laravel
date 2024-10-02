@@ -66,11 +66,10 @@ class MovieController extends Controller
         return $this->movieService->cancel_order($request);
     }
 
-    public function confirm_order()
+    public function confirm_order(Request $request)
     {
-
         return view("confirm_order", [
-            "data" => $this->movieService->get_confirm_order()
+            "data" => $this->movieService->get_confirm_order($request->query("email"))
         ]);
     }
 
