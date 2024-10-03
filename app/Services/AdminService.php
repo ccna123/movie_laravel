@@ -36,7 +36,7 @@ class AdminService
         return $profit_data;
     }
 
-    public function update_movie(Request $request)
+    public function updateMovie(Request $request)
     {
         $movie = Movie::where("id", $request->movie_id)->first();
 
@@ -48,13 +48,13 @@ class AdminService
         return redirect("admin")->with("update_message", "Update successfully");
     }
 
-    public function delete_movie(Request $request)
+    public function deleteMovie(Request $request)
     {
         Movie::find($request->movie_id)->delete();
         return redirect("admin")->with("delete_message", "Delete successfully");
     }
 
-    public function add_movie(Request $request)
+    public function addMovie(Request $request)
     {
         $movie = Movie::where("imdb_id", $request->imdb)->get();
         if ($movie->count() == 0) {
@@ -83,6 +83,6 @@ class AdminService
         $user = User::where("email", auth()->user()->email)->first();
         $user->img = $ImgNewName;
         $user->save();
-        return redirect('/admin')->with('update_info', 'Information is successfully updated');
+        return redirect('/admin')->with('updateInfo', 'Information is successfully updated');
     }
 }

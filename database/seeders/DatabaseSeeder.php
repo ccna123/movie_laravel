@@ -20,5 +20,17 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        try {
+            //code...
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+        $this->call([
+            UserSeeder::class,
+            MovieSeeder::class,
+            SeatSeeder::class,
+        ]);
     }
 }

@@ -10,7 +10,7 @@ $(document).ready(function () {
             icon.removeClass('fa-solid fa-check text-success fa-2xl').addClass('fa-solid fa-pen');
             $.ajax({
                 type: "POST",
-                url: "/update_admin_name",
+                url: "/updateAdminName",
                 data: {
                     name: $('#inputName').val(),
                 },
@@ -45,7 +45,7 @@ $(document).ready(function () {
             icon.removeClass('fa-solid fa-check text-success fa-2xl').addClass('fa-solid fa-pen');
             $.ajax({
                 type: "POST",
-                url: "/update_admin_email",
+                url: "/updateAdminEmail",
                 data: {
                     email: $('#inputEmail').val(),
                 },

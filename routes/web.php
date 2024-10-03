@@ -21,27 +21,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [MovieController::class, "index"]);
-Route::get('/get_movies', [MovieController::class, "get_movies"]);
+Route::get('/getMovies', [MovieController::class, "getMovies"]);
 Route::get('/info', [MovieController::class, "info"]);
 Route::get('/seat', [MovieController::class, "seat"]);
 Route::post('/booking', [MovieController::class, "booking"]);
 Route::post('/login', [MovieController::class, "login"]);
-Route::get('/search_order', [MovieController::class, "search_order"]);
-Route::get('/checking_booking', [MovieController::class, "checking_booking"])->name('checking_booking');
-Route::get('/checking_order', [MovieController::class, "checking_order"]);
+Route::get('/searchOrder', [MovieController::class, "searchOrder"]);
+Route::get('/checkingBooking', [MovieController::class, "checking_booking"])->name('checkingBooking');
+Route::get('/checkingOrder', [MovieController::class, "checkingOrder"]);
 Route::post('/cancel', [MovieController::class, "cancel"]);
-Route::get('/confirm_order', [MovieController::class, "confirm_order"])->name('confirm_order');
+Route::get('/confirmOrder', [MovieController::class, "confirmOrder"])->name('confirmOrder');
 Route::post('/logout', [MovieController::class, "logout"]);
 
 /* test event */
 Route::get("/admin", [AdminController::class, "index"])->middleware("auth");
-Route::post("/update_movie", [AdminController::class, "update_movie"]);
-Route::post("/delete_movie", [AdminController::class, "delete_movie"]);
-Route::post("/add_movie", [AdminController::class, "add_movie"]);
-Route::post("/update_info", [AdminController::class, "update_info"]);
-Route::post("/update_img", [AdminController::class, "update_img"]);
-Route::delete("/delete_img", [AdminController::class, "delete_img"]);
-Route::post("/update_admin_name", [AdminController::class, "update_admin_name"]);
-Route::post("/update_admin_email", [AdminController::class, "update_admin_email"]);
+Route::post("/updateMovie", [AdminController::class, "updateMovie"]);
+Route::post("/deleteMovie", [AdminController::class, "deleteMovie"]);
+Route::post("/addMovie", [AdminController::class, "addMovie"]);
+Route::post("/updateInfo", [AdminController::class, "updateInfo"]);
+Route::post("/updateImg", [AdminController::class, "updateImg"]);
+Route::delete("/deleteImg", [AdminController::class, "deleteImg"]);
+Route::post("/updateAdminName", [AdminController::class, "updateAdminName"]);
+Route::post("/updateAdminEmail", [AdminController::class, "updateAdminEmail"]);
 Route::post("/import_movie_data", [AdminController::class, "import_movie_data"]);
 Route::post("/import_seat_data", [AdminController::class, "import_seat_data"]);

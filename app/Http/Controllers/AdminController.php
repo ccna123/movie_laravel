@@ -28,29 +28,29 @@ class AdminController extends Controller
         ]);
     }
 
-    public function update_movie(Request $request)
+    public function updateMovie(Request $request)
     {
 
-        return $this->adminService->update_movie($request);
+        return $this->adminService->updateMovie($request);
     }
 
-    public function delete_movie(Request $request)
+    public function deleteMovie(Request $request)
     {
-        return $this->adminService->delete_movie($request);
+        return $this->adminService->deleteMovie($request);
     }
 
-    public function add_movie(Request $request)
+    public function addMovie(Request $request)
     {
-        return $this->adminService->add_movie($request);
+        return $this->adminService->addMovie($request);
     }
 
-    public function update_info(Request $request)
+    public function updateInfo(Request $request)
     {
 
         return $this->adminService->update_admin_info($request);
     }
 
-    public function update_img(Request $request)
+    public function updateImg(Request $request)
     {
 
         if ($request->hasFile('profile_img')) {
@@ -69,7 +69,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function update_admin_name(Request $request)
+    public function updateAdminName(Request $request)
     {
         $user = auth()->user();
         $user->name = $request->name;
@@ -80,7 +80,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function update_admin_email(Request $request)
+    public function updateAdminEmail(Request $request)
     {
         $user = auth()->user();
         $user->email = $request->email;

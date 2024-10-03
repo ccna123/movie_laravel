@@ -9,7 +9,7 @@
         <div class="modal-body">
           Do you want to delete {{ $movie->name }}
         </div>
-        <form action="/delete_movie" method="post">
+        <form action="/deleteMovie" method="post">
           @csrf
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

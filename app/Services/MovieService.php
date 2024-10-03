@@ -92,7 +92,7 @@ class MovieService
         }
 
 
-        // $order_data = $this->get_confirm_order($cus_email);
+        // $order_data = $this->get_confirmOrder($cus_email);
         // $this->sendEMailService->sendMail($cus_email, json_encode($order_data));
 
         return "Success";
@@ -127,7 +127,7 @@ class MovieService
         return $data;
     }
 
-    public function get_checking_order($request)
+    public function get_checkingOrder($request)
     {
         $seat_codes = Movie::find($request->movie_id)->seats()->pluck("seat_code")->implode(",");
         return $seat_codes;
@@ -144,7 +144,7 @@ class MovieService
         ]);
     }
 
-    public function get_confirm_order($cus_email)
+    public function get_confirmOrder($cus_email)
     {
         $records = Order::where("cus_email", $cus_email)->get();
         $data = [];

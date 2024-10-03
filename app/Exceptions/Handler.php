@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
 {
@@ -15,6 +16,24 @@ class Handler extends ExceptionHandler
     protected $levels = [
         //
     ];
+
+    public function report(Throwable $e)
+    {
+        if (!config('app.debug')) {
+            $message = "[{$e->getCode()}] \"{$e->getMessage()}\" in {$e->getFile()} at line {$e->getLine()}";
+            Log::channel("error_log")->error($message, [
+                'userId' => auth()->check() ? auth()->user()->id : 'guest',
+                'url' => request()->fullUrl(),
+                'method' => request()->method(),
+                'ip' => request()->ip(),
+            ]);
+        } else {
+            // If in debug mode, log the full stack trace
+            parent::report($e);
+        }
+    }
+
+
 
     /**
      * A list of the exception types that are not reported.

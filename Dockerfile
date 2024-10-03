@@ -22,5 +22,8 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 # Set permissions (adjust according to your needs)
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Enable mod_rewrite for Laravel
+RUN a2enmod rewrite
+
 # Expose port 80
 EXPOSE 80

@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     $.ajax({
         type: "GET",
-        url: "/checking_order",
+        url: "/checkingOrder",
         data: {
             movie_id: movie_id
         },
@@ -68,6 +68,7 @@ $(document).ready(function () {
             dataType: "html",
             success: function () {
                 alert("Order successfully. You can check your order by pressing check booking")
+                location.reload();
             }
         });
     });

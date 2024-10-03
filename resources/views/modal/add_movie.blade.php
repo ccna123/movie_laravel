@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
               {{-- edit detail --}}
-              <form method="POST" action="/add_movie">
+              <form method="POST" action="/addMovie">
               <div class="form-floating mb-3">
                 <input type="text" name="imdb" class="form-control" id="floatingImdb" placeholder="Ex: tt123456">
                 <label for="floatingImdb">Imdb</label>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\MovieService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MovieController extends Controller
 {
@@ -27,6 +28,7 @@ class MovieController extends Controller
     public function info(Request $request)
     {
         $movieInfo = $this->movieService->get_movie_info($request->movie_id);
+        $movieInfo->movieId = $request->movie_id;
         return view("info", compact('movieInfo'));
     }
 
@@ -47,17 +49,17 @@ class MovieController extends Controller
         return view("login");
     }
 
-    public function search_order(Request $request)
+    public function searchOrder(Request $request)
     {
         $data = $this->movieService->get_order($request);
         return response()->json(compact("data"));
     }
 
-    public function checking_order(Request $request)
+    public function checkingOrder(Request $request)
     {
 
         return response()->json([
-            "seat_list" => $this->movieService->get_checking_order($request)
+            "seat_list" => $this->movieService->get_checkingOrder($request)
         ]);
     }
 
@@ -66,10 +68,10 @@ class MovieController extends Controller
         return $this->movieService->cancel_order($request);
     }
 
-    public function confirm_order(Request $request)
+    public function confirmOrder(Request $request)
     {
         return view("confirm_order", [
-            "data" => $this->movieService->get_confirm_order($request->query("email"))
+            "data" => $this->movieService->get_confirmOrder($request->query("email"))
         ]);
     }
 

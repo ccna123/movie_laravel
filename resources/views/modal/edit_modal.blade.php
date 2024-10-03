@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
               {{-- edit detail --}}
-              <form method="POST" action="/update_movie">
+              <form method="POST" action="/updateMovie">
               <div class="form-floating mb-3">
                 <input type="text" name="imdb" class="form-control" id="floatingImdb" value="{{ $movie->imdb_id }}">
                 <label for="floatingImdb">Imdb</label>

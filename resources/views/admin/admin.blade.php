@@ -26,9 +26,9 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
-@elseif (session()->has("update_info"))
+@elseif (session()->has("updateInfo"))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-  {{ session()->get("update_info") }}
+  {{ session()->get("updateInfo") }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @elseif (session()->has("upload_img"))
@@ -45,7 +45,7 @@
   <div class="wrapper">
     <h1>Dashboard</h1>
     {{-- profile info --}}
-    <form action="update_info" method="post" enctype="multipart/form-data">
+    <form action="updateInfo" method="post" enctype="multipart/form-data">
       @csrf
       <div class="row">
         <div class="col-md-4">
@@ -229,7 +229,7 @@
       const formData = new FormData();
       formData.append('profile_img', e.detail.file.file);
 
-      fetch('/update_img', {
+      fetch('/updateImg', {
         method: 'POST',
         body: formData,
         headers: {

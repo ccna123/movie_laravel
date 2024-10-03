@@ -34,7 +34,7 @@
               <a class="nav-link fw-bold text-white" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-bold text-white" href="/checking_booking">Check Booking</a>
+              <a class="nav-link fw-bold text-white" href="/checkingBooking">Check Booking</a>
             </li>
             
             @can('admin_auth', Auth::user())
@@ -48,7 +48,7 @@
           <ul class="navbar-nav ml-auto">
             @auth
             <li class="nav-item">
-              <a class="nav-link fw-bold text-white" href="{{ url('/confirm_order?email=' . auth()->user()->email) }}">Welcome {{ auth()->user()->name }}</a>
+              <a class="nav-link fw-bold text-white" href="{{ url('/confirmOrder?email=' . auth()->user()->email) }}">Welcome {{ auth()->user()->name }}</a>
             </li>
             <li class="nav-item">
               <form action="/logout" method="post">

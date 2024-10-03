@@ -11,7 +11,7 @@
 
         <div class="card-body bg-dark text-white">
             <p class="card-text">{{ $movieInfo->Plot }}</p>
-            <a href="/seat?movieInfo_id=${movieInfo_id}" class="btn btn-success d-block">Book</a>
+            <a href="/seat?movie_id={{ $movieInfo->movieId }}" class="btn btn-success d-block">Book</a>
         </div>
     </div>
 

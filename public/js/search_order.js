@@ -1,10 +1,10 @@
 $(document).ready(function () {
-    $("#search_order").click(function (e) {
+    $("#searchOrder").click(function (e) {
         e.preventDefault();
         let order_email = $("input").val();
         $.ajax({
             type: "get",
-            url: "/search_order?email=" + order_email,
+            url: "/searchOrder?email=" + order_email,
             dataType: "json",
             success: function (response) {
                 if (response.mess == "Not found") {
