@@ -1,50 +1,50 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: laravel_app
-    container_name: laravel_app
-    ports:
-      - "8000:80" # Maps port 8000 on the host to port 80 in the container
-    depends_on:
-      - db
-    environment:
-      - DB_CONNECTION=mysql
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_DATABASE=movie
-      - DB_USERNAME=root
-      - DB_PASSWORD=root
-      - API_KEY=3f1deceb
-    command: >
-      bash -c "sleep 40 && composer install && php artisan migrate --force && apache2-foreground"
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: laravel_app
+        container_name: laravel_app
+        ports:
+            - "80:80" # Maps port 8000 on the host to port 80 in the container
+        depends_on:
+            - db
+        environment:
+            - DB_CONNECTION=mysql
+            - DB_HOST=db
+            - DB_PORT=3306
+            - DB_DATABASE=movie
+            - DB_USERNAME=root
+            - DB_PASSWORD=root
+            - API_KEY=3f1deceb
+        command: >
+            bash -c "sleep 40 && composer install && php artisan migrate --force && php artisan key:generate && apache2-foreground"
 
-  db:
-    image: mysql:latest
-    container_name: mysql_db
-    environment:
-      MYSQL_DATABASE: movie
-      MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - ./mysql-data:/var/lib/mysql
+    db:
+        image: mysql:latest
+        container_name: mysql_db
+        environment:
+            MYSQL_DATABASE: movie
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - db_data:/var/lib/mysql
 
-  fluentd:
-    build:
-      context: ./fluentd                 # Specify the build context
-      dockerfile: Dockerfile              # Use the Dockerfile in fluentd directory
-    container_name: fluentd
-    volumes:
-      - ./fluentd/conf:/fluentd/etc        # Configuration files
-      - ./storage/logs:/fluentd/logs      # Log files
-    ports:
-      - "24224:24224"                      # Fluentd input port
-      - "24224:24224/udp"                 # Fluentd input port for UDP
-    command: fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins
-    environment:
-      FLUENTD_CONF: "fluent.conf"         # Specify Fluentd config file
+    fluentd:
+        build:
+            context: ./fluentd # Specify the build context
+            dockerfile: Dockerfile # Use the Dockerfile in fluentd directory
+        container_name: fluentd
+        volumes:
+            - ./fluentd/conf:/fluentd/etc # Configuration files
+            - ./storage/logs:/fluentd/logs # Log files
+        ports:
+            - "24224:24224" # Fluentd input port
+            - "24224:24224/udp" # Fluentd input port for UDP
+        command: fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins
+        environment:
+            FLUENTD_CONF: "fluent.conf" # Specify Fluentd config file
 
 volumes:
-  db_data:
+    db_data:
