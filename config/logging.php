@@ -129,6 +129,11 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'fluentd' => [
+            'driver' => 'custom',
+            'via' => \App\Logging\FluentdLogger::class,
+        ],
     ],
 
 ];
